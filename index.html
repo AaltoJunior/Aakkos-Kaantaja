@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title>Aakkos Kääntäjä</title>
+    <style>
+        #inputText, #inputBin{
+            border-color: green;
+        }
+
+        #outputText, #outputBin{
+            border-color: purple;
+        }
+        .left{
+            float: left;
+            margin: 50px;
+        }
+
+        .right{
+            float: left;
+            margin: 50px;
+        }
+        .left-table{
+            float: left;
+            margin: 50px;
+        }
+        table, tr, td{
+            min-width: 15px;
+            padding: 1px 3px;
+            border: 1px dashed #999;
+        }
+        body {
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 14px;
+
+        }
+        .tt {
+            border-collapse: collapse;
+            width: 400px;
+        }
+        tr {
+            height: 30px;
+        }
+        body > div.left-table > table > tbody > tr > td > p {
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function textToBin() {
+            let text = document.getElementById("inputText").value;
+            let uText = text.toUpperCase();
+
+            let final = "";
+
+            for (let i = 0; i < uText.length; i++) {
+
+                if (uText[i].charCodeAt(0) == 32) { // Välilyönti
+                    let c = "11110"
+                    final = final + " " + c;    
+                } else if (uText[i].charCodeAt(0) == 196) { // Ä
+                    let c = "11100"
+                    final = final + " " + c;    
+                } else if (uText[i].charCodeAt(0) == 214) { // Ö
+                    let c = "11101"
+                    final = final + " " + c;    
+                } else if (uText[i].charCodeAt(0) == 197) { // Å
+                    let c = "11011"
+                    final = final + " " + c;    
+                } else if (uText[i].charCodeAt(0) == 46) { // .
+                    let c = "11111"
+                    final = final + " " + c;    
+                }        
+                else {
+                    let c = (uText[i].charCodeAt(0)-64).toString(2);
+                    c = "00000".substr(c.length) + c;                    
+                    final = final + " " + c;    
+                }
+
+                
+            }
+
+            document.getElementById("outputText").innerHTML = final;
+        }
+
+        function binToText() {
+            let bin = document.getElementById("inputBin").value;
+            let array = bin.split(" ");
+
+            let binText = "";
+
+
+            for (let index = 0; index < array.length; index++) {
+                if ((parseInt(array[index], 2)) == 30) { // Välilyönti
+                    let realC = " "
+                    binText = binText + realC; 
+                } else if ((parseInt(array[index], 2)) == 28) { // Ä
+                    let realC = "Ä"
+                    binText = binText + realC; 
+                } else if ((parseInt(array[index], 2)) == 29) { // Ö
+                    let realC = "Ö"
+                    binText = binText + realC; 
+                } else if ((parseInt(array[index], 2)) == 27) { // Å
+                    let realC = "Å"
+                    binText = binText + realC; 
+                } else if ((parseInt(array[index], 2)) == 31) { // .
+                    let realC = "."
+                    binText = binText + realC; 
+                } else {
+                    // console.log((parseInt(array[index], 2)));
+                    let realC = String.fromCharCode((parseInt(array[index], 2) + 64));
+                    binText = binText + realC; 
+                }  
+            }
+            document.getElementById("outputBin").innerHTML = binText;
+
+        }
+    </script>
+    <div class="left-table">
+        <table class="tt">
+            <tbody>
+            <tr>
+            <td>
+            <p><strong>Kirjain</strong></p>
+            </td>
+            <td>
+            <p><strong>Numero</strong></p>
+            </td>
+            <td>
+            <p><strong>Bin&auml;&auml;ri</strong></p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>A</p>
+            </td>
+            <td>
+            <p>1</p>
+            </td>
+            <td>
+            <p>00001</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>B</p>
+            </td>
+            <td>
+            <p>2</p>
+            </td>
+            <td>
+            <p>00010</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>C</p>
+            </td>
+            <td>
+            <p>3</p>
+            </td>
+            <td>
+            <p>00100</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>D</p>
+            </td>
+            <td>
+            <p>4</p>
+            </td>
+            <td>
+            <p>00100</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>E</p>
+            </td>
+            <td>
+            <p>5</p>
+            </td>
+            <td>
+            <p>00101</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>F</p>
+            </td>
+            <td>
+            <p>6</p>
+            </td>
+            <td>
+            <p>00110</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>G</p>
+            </td>
+            <td>
+            <p>7</p>
+            </td>
+            <td>
+            <p>00111</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>H</p>
+            </td>
+            <td>
+            <p>8</p>
+            </td>
+            <td>
+            <p>01000</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>I</p>
+            </td>
+            <td>
+            <p>9</p>
+            </td>
+            <td>
+            <p>01001</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>J</p>
+            </td>
+            <td>
+            <p>10</p>
+            </td>
+            <td>
+            <p>01010</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>K</p>
+            </td>
+            <td>
+            <p>11</p>
+            </td>
+            <td>
+            <p>01011</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>L</p>
+            </td>
+            <td>
+            <p>12</p>
+            </td>
+            <td>
+            <p>01100</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>M</p>
+            </td>
+            <td>
+            <p>13</p>
+            </td>
+            <td>
+            <p>01101</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>N</p>
+            </td>
+            <td>
+            <p>14</p>
+            </td>
+            <td>
+            <p>01110</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>O</p>
+            </td>
+            <td>
+            <p>15</p>
+            </td>
+            <td>
+            <p>01111</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>P</p>
+            </td>
+            <td>
+            <p>16</p>
+            </td>
+            <td>
+            <p>10000</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>Q</p>
+            </td>
+            <td>
+            <p>17</p>
+            </td>
+            <td>
+            <p>10001</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>R</p>
+            </td>
+            <td>
+            <p>18</p>
+            </td>
+            <td>
+            <p>10010</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>S</p>
+            </td>
+            <td>
+            <p>19</p>
+            </td>
+            <td>
+            <p>10011</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>T</p>
+            </td>
+            <td>
+            <p>20</p>
+            </td>
+            <td>
+            <p>10100</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>U</p>
+            </td>
+            <td>
+            <p>21</p>
+            </td>
+            <td>
+            <p>10101</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>V</p>
+            </td>
+            <td>
+            <p>22</p>
+            </td>
+            <td>
+            <p>10110</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>W</p>
+            </td>
+            <td>
+            <p>23</p>
+            </td>
+            <td>
+            <p>10111</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>X</p>
+            </td>
+            <td>
+            <p>24</p>
+            </td>
+            <td>
+            <p>11000</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>Y</p>
+            </td>
+            <td>
+            <p>25</p>
+            </td>
+            <td>
+            <p>11001</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>Z</p>
+            </td>
+            <td>
+            <p>26</p>
+            </td>
+            <td>
+            <p>11010</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>&Aring;</p>
+            </td>
+            <td>
+            <p>27</p>
+            </td>
+            <td>
+            <p>11011</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>&Auml;</p>
+            </td>
+            <td>
+            <p>28</p>
+            </td>
+            <td>
+            <p>11100</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>&Ouml;</p>
+            </td>
+            <td>
+            <p>29</p>
+            </td>
+            <td>
+            <p>11101</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>V&auml;lily&ouml;nti</p>
+            </td>
+            <td>
+            <p>30</p>
+            </td>
+            <td>
+            <p>11110</p>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <p>.</p>
+            </td>
+            <td>
+            <p>31</p>
+            </td>
+            <td>
+            <p>11111</p>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+    </div>
+    <div class="left">
+        <h1>Teksti -> binääri</h1>
+        <div>
+            <p>Teksti</p>
+            <textarea id="inputText" cols="30" rows="10"></textarea>
+        </div>
+        
+        <button onclick="textToBin()">Käännä</button>
+        <div>
+            <p>Binääri</p>
+            <textarea id="outputText" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+
+    <div class="right">
+        <h1>Binääri -> Teksti</h1>
+        <div>
+            <p>Binääri</p>
+            <textarea id="inputBin" cols="30" rows="10"></textarea>
+        </div>
+        
+        <button onclick="binToText()">Käännä</button>
+        <div>
+            <p>Teksti</p>
+            <textarea id="outputBin" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+    
+</body>
+</html>
